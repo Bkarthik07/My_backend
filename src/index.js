@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
-
+import { app } from './app.js';
 import connectDB from "./db/index.js";
 
 dotenv.config({
@@ -8,7 +8,16 @@ dotenv.config({
 })
 
 
-;(()=>{connectDB()})()
+;(()=>{connectDB()
+    .then(()=>{
+        app.listen(process.env.PORT || 8080,()=>{
+            console.log(`server is running at post : http://localhost:${process.env.PORT || 8080}`)
+        })
+    })
+    .catch((error)=>{
+        console.log("Mongodb connnection error",error)
+    })
+})()
 // import express from "express"
 
 // const app = express();
