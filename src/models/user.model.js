@@ -7,28 +7,28 @@ const userSchema = new mongoose.Schema(
         username:{
             type:String,
             required:true,
-            unique:true,
+            unique: true, 
             lowercase:true,
-            trim:true,
-            index:true
+            trim:true
         },
         email:{
             type:String,
             required:true,
             unique:true,
             lowercase:true,
-            trim:true
+            trim:true,
+            match: [/.+\@.+\..+/, "Please fill a valid email address"]
         },
         fullname:{
             type:String,
             required:true,
-            unique:true,
+     
             lowercase:true,
             trim:true
         },
         avatar:{
             type:String,//cloudinary url
-            reqired:true
+            default:"https://avatars.githubusercontent.com/u/173839275?s=96&v=4"
 
         },
         coverImage:{
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save",async function (next){
     if(!this.isModified("password")) return next();
-    this.password = bcrypt.hash(this.password,10)
+    this.password = await bcrypt.hash(this.password,10)
     next();
 })
 

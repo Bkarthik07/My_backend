@@ -17,12 +17,13 @@ const uploadOnCloudinary = async (localFilePath)=>{
         })
         //file as been uploaded successfully
         console.log("File uploaded successfully on cloudinary",response.url);
+        // fs.unlink(localFilePath)
         return response;
     } catch (error) {
         fs.unlinkSync(localFilePath); // remove the locally saved temperory file as the upload file operation failed
         return null;
     }
 }
-
+export {uploadOnCloudinary};
 
 
